@@ -17,7 +17,7 @@ app.use(express.static('public'));
 // de hacer una peticion al servidor. Recibe dos argumentos:
 //  -ruta que manejara ----> 'path':string
 //  -archivos que contendra  ---> require('./pathArchivos')
-app.use('api/auth', require('./routes/auth'));
+app.use('/api/auth', require('./routes/auth'));
 
 //escuchar peticiones
 const port = process.env.PORT;
