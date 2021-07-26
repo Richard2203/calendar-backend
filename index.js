@@ -1,10 +1,14 @@
 const express = require('express');
+const dbConnection = require('./database/config');
 
 // nos permite obtener y ver que variables de entorno existen
 require('dotenv').config();
 
 //*CREANDO SERVIDOR DE EXPRESS
 const app = express();
+
+//* CONEXION A BD
+dbConnection();
 
 //* DIRECTORIO PUBLICO
 // use() es un middleware, es decir es una funcion que se ejecuta al momento
