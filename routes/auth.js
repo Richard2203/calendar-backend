@@ -8,6 +8,8 @@ const { check } = require('express-validator');
 // Router() retorna un router
 const router = Router();
 
+const validarCampos = require('../middlewares/validar-campos');
+
 // -metodo "check"  es un middleware que valida campos, not().isEmpty() indica
 // no debe estar vacio el campo
 router.post(
@@ -19,6 +21,7 @@ router.post(
 			'password',
 			'El password debe ser de al menos 8 caracteres'
 		).isLength({ min: 8 }),
+		validarCampos,
 	],
 	newUser
 );
@@ -31,6 +34,7 @@ router.post(
 			'password',
 			'El password debe ser de al menos 8 caracteres'
 		).isLength({ min: 8 }),
+		validarCampos,
 	],
 	loginUser
 );
