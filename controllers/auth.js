@@ -55,15 +55,44 @@ const newUser = async (req, res = response) => {
 };
 
 // asignamos "response" a "res" para que el intelligent de VSC nos ofrezca ayuda
-const loginUser = (req, res = response) => {
+const loginUser = async (req, res = response) => {
 	const { email, password } = req.body;
 
-	res.status(202).json({
-		ok: true,
-		msg: 'login',
-		email,
-		password,
-	});
+	try {
+		// .findOne({ <NomPropieadad> }) retorna el primer objeto cuya propieadad
+		// sea igual al valor mandado
+		let usuario = await Usuario.findOne({ email });
+
+		if (!usuario)
+			return res.status(500).json({
+				ok: false,
+				msg: 'Usuario o contraseña incorrectos',
+			});
+
+		//*COMPARANDO CONTRASENIAS
+		// compareSync(<StringObtenido:string>,<StringEncriptadoPreviamente:string>)
+		// retorna booleano
+		const validPassword = bcrypt.compareSync(password, usuario.password);
+
+		if (!validPassword)
+			return res.status(500).json({
+				ok: false,
+				msg: 'Usuario o contraseña incorrectos',
+			});
+
+		//* LOGIN ACEPTADO
+		res.json({
+			ok: true,
+			uid: usuario.id,
+			name: usuario.name,
+		});
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({
+			ok: false,
+			msg: 'Por favor hable con el administrador',
+		});
+	}
 };
 
 // asignamos "response" a "res" para que el intelligent de VSC nos ofrezca ayuda
