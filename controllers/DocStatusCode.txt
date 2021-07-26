@@ -1,0 +1,3 @@
+Existen varios codigos de estado y en esta url se encuentra
+cuales son y en que consisten
+    https://www.restapitutorial.com/httpstatuscodes.html
