@@ -13,10 +13,11 @@ const app = express();
 app.use(express.static('public'));
 
 // rutas
-// .get() retorna una peticion hecha al servidor
-// primer argumento es el path url, segundo argumento es un callback
-// donde ira el retorno del get
-app.get('/', (req, res) => {});
+// use() es un middleware, es decir es una funcion que se ejecuta al momento
+// de hacer una peticion al servidor. Recibe dos argumentos:
+//  -ruta que manejara ----> 'path':string
+//  -archivos que contendra  ---> require('./pathArchivos')
+app.use('api/auth', require('./routes/auth'));
 
 //escuchar peticiones
 const port = process.env.PORT;
