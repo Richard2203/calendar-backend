@@ -1,4 +1,9 @@
 const express = require('express');
+
+// https://www.npmjs.com/package/cors
+// comando de instalacion npm install cors
+const cors = require('cors');
+
 const dbConnection = require('./database/config');
 
 // nos permite obtener y ver que variables de entorno existen
@@ -6,6 +11,11 @@ require('dotenv').config();
 
 //*CREANDO SERVIDOR DE EXPRESS
 const app = express();
+
+//*ADICIONANDO CORS
+// cors es un middleware
+// permite restringir que urls pueden acceder a esta API
+app.use(cors());
 
 //* CONEXION A BD
 dbConnection();

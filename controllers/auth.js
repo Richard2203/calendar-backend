@@ -108,10 +108,18 @@ const loginUser = async (req, res = response) => {
 };
 
 // asignamos "response" a "res" para que el intelligent de VSC nos ofrezca ayuda
-const RevalidarToker = (req, res) => {
+const RevalidarToker = async (req, res) => {
+	// uid y name vienene de "req" y "req" obtuvo la informacion de la validacion
+	// del token
+	const { uid, name } = req;
+
+	//* GENERANDO UN TOKEN
+	const token = await generarJWT(uid, name);
 	res.json({
 		ok: true,
-		msg: 'renew',
+		uid,
+		name,
+		token,
 	});
 };
 // exportaremos diversas funciones por lo cual exportamos un objeto

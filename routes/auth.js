@@ -1,5 +1,4 @@
 const { Router } = require('express');
-const { loginUser, RevalidarToker, newUser } = require('../controllers/auth');
 
 // express-validator nos permite hacer validaciones
 // se instala con el comando npm i express-validator
@@ -9,6 +8,9 @@ const { check } = require('express-validator');
 const router = Router();
 
 const validarCampos = require('../middlewares/validar-campos');
+
+const { loginUser, RevalidarToker, newUser } = require('../controllers/auth');
+const { validarjwt } = require('../middlewares/validar-jwt');
 
 // -metodo "check"  es un middleware que valida campos, not().isEmpty() indica
 // no debe estar vacio el campo
@@ -42,6 +44,6 @@ router.post(
 // .get() retorna una peticion hecha al servidor
 // primer argumento es el path url, segundo argumento es un callback
 // donde ira el retorno del get
-router.get('/renew', RevalidarToker);
+router.get('/renew', validarjwt, RevalidarToker);
 
 module.exports = router;
