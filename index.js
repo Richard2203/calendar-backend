@@ -36,8 +36,8 @@ app.use(express.json());
 // de hacer una peticion al servidor. Recibe dos argumentos:
 //  -ruta que manejara ----> 'path':string
 //  -archivos que contendra  ---> require('./pathArchivos')
-
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/events', require('./routes/events'));
 
 //*ESCUCHAR PETICIONES
 const port = process.env.PORT;
