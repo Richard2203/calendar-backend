@@ -28,7 +28,9 @@ const newUser = async (req, res = response) => {
 				msg: 'el correo ya esta en uso',
 			});
 
-		// creando una nueva instancia de Usuario
+		// creando una nueva instancia del modelo Usuario
+		// este modelo unicamente tomara las propieades que emplea,
+		// el resto de propieades no establecidas en el modelo las ignorara
 		usuario = new Usuario(req.body);
 
 		//* ENCRIPTAR CONTRASENIA

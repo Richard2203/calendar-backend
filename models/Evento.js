@@ -6,25 +6,39 @@ const { Schema, model } = require('mongoose');
 const EventosSchema = new Schema({
 	title: {
 		type: String,
-		require: true,
+		required: true,
 	},
 	notes: {
 		type: String,
-		require: true,
+		required: true,
 	},
 	start: {
 		type: Date,
-		require: true,
+		required: true,
 	},
 	end: {
 		type: Date,
-		require: true,
+		required: true,
 	},
 	// creando una referencia ID con otro modelo
 	user: {
 		type: Schema.Types.ObjectId,
 		ref: 'Usuario',
+		required: true,
 	},
+});
+
+// el segundo argumento es una funcion que nos permite hacer diversas modificaciones
+// al modelo
+EventosSchema.method('toJSON', function () {
+	// haciendo referencia al modelo que se esta construyendo
+	// this.toObject();
+	const { _id, __v, ...object } = this.toObject();
+
+	// object.<NomPropieadadNueva> = <NomPropieadadieja>
+	// nos permite reasignar nombres a una propieadad y modificar valores
+	object.id = _id;
+	return object;
 });
 
 // exportando un model, recibe el nombre de la "tabla" y el schema
