@@ -40,7 +40,6 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/events', require('./routes/events'));
 
 //*ESCUCHAR PETICIONES
-const port = process.env.PORT;
-app.listen(port, () => {
-	console.log(`servidor corriendo en puerto ${port}`);
+app.listen(process.env.PORT, () => {
+	console.log(`servidor corriendo en puerto ${process.env.PORT}`);
 });
