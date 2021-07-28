@@ -1,11 +1,26 @@
 const { response } = require('express');
 const Evento = require('../models/Evento');
 
-const getEventos = (req, res = response) => {
-	res.json({
-		ok: true,
-		msg: 'getEventos',
-	});
+const getEventos = async (req, res = response) => {
+	try {
+		// - find() retorna todos los elementos que correspondan con el argumento
+		//   enviado, si no se envia nada retorna todos los registros
+		// - populate('<nomModeloCorrespondienteAPropieadad>',<campo1 campo2 campoETC...>)
+		//   retorna el uid y los campos indicados en la propieadad que tenga entiedad
+		// 	 relacional con otro modelo
+		const events = await Evento.find().populate('user', 'name email');
+
+		res.json({
+			ok: true,
+			events,
+		});
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({
+			ok: false,
+			msg: 'por favor hable con el administrador',
+		});
+	}
 };
 
 const crearEvento = async (req, res = response) => {
