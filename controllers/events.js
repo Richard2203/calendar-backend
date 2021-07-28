@@ -106,11 +106,38 @@ const actualizarEvento = async (req, res = response) => {
 	}
 };
 
-const eliminarEvento = (req, res = response) => {
-	res.json({
-		ok: true,
-		msg: 'eliminarEvento',
-	});
+const eliminarEvento = async (req, res = response) => {
+	// el nombre de la propiedad "id" esta definido en el path
+	const eventoID = req.params.id;
+	const uid = req.uid;
+
+	try {
+		const evento = await Evento.findById(eventoID);
+
+		if (!evento)
+			res.status(404).json({
+				ok: false,
+				msg: 'No existe evento con ese ID',
+			});
+
+		if (evento.user.toString() !== uid)
+			res.status(401).json({
+				ok: false,
+				msg: 'No tiene privilegios para editar este evento',
+			});
+
+		await Evento.findByIdAndDelete(eventoID);
+
+		res.json({
+			ok: true,
+		});
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({
+			ok: false,
+			msg: 'por favor hable con el administrador',
+		});
+	}
 };
 
 module.exports = { getEventos, crearEvento, actualizarEvento, eliminarEvento };
